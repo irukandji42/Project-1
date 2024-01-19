@@ -1,0 +1,92 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "GitHub Repository Content API for Project-1",
+      "version": "1.0.0",
+      "description": "API for accessing file names and contents in the 'Project-1' repository of the user 'irukandji42'."
+    },
+    "servers": [
+      {
+        "url": "https://api.github.com",
+        "description": "GitHub API"
+      }
+    ],
+    "paths": {
+      "/repos/irukandji42/Project-1/contents/": {
+        "get": {
+          "summary": "Get Repository Content",
+          "description": "Retrieves the contents of a file or directory in the 'Project-1' repository of 'irukandji42'.",
+          "operationId": "getRepositoryContent",
+          "parameters": [
+            {
+              "name": "path",
+              "in": "path",
+              "required": true,
+              "description": "Path to the file or directory. Leave empty for root directory.",
+              "schema": {
+                "type": "string",
+                "default": ""
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/ContentResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "ContentResponse": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            },
+            "sha": {
+              "type": "string"
+            },
+            "size": {
+              "type": "integer"
+            },
+            "url": {
+              "type": "string"
+            },
+            "html_url": {
+              "type": "string"
+            },
+            "git_url": {
+              "type": "string"
+            },
+            "download_url": {
+              "type": "string",
+              "nullable": true
+            },
+            "type": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string",
+              "nullable": true
+            },
+            "encoding": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        }
+      }
+    }
+  }
