@@ -44,8 +44,6 @@ header, footer {
     margin-bottom: 20px;
 }
 
-/* Additional styles for footer and toast notifications */
-
 footer {
     background-color: #f2f2f2;
     color: #333;
@@ -83,8 +81,3 @@ footer a:hover {
     border-radius: 5px;
     opacity: 0.9;
 }
-
-/* Considerations for responsiveness and accessibility */
-/* [CR]: Implement media queries for mobile viewports. */
-/* [CR]: Verify contrast ratios for accessibility. */
-/* [CR]: Consider adding ':hover' and ':focus' styles for interactive elements. */
