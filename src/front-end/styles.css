@@ -64,3 +64,9 @@ button:hover {
     min-height: 150px; /* Adjust as needed */
     overflow: auto; /* Adds scrollbar if content overflows */
 }
+
+.code-content {
+    white-space: pre-wrap; /* Wraps the text */
+    word-break: break-all; /* Ensures long lines do not overflow */
+    /* Add more styling as needed */
+}
