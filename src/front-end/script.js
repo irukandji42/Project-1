@@ -1,19 +1,30 @@
 document.getElementById('fetchRepo').addEventListener('click', function() {
-    const repoOwner = document.getElementById('repoOwner').value.trim();
-    const repoName = document.getElementById('repoName').value.trim();
+    const repoInput = document.getElementById('repoInput').value.trim();
+    const [owner, name] = repoInput.split('/');
 
-    if (repoOwner && repoName) {
-        fetchRepositoryData(repoOwner, repoName);
+    if (owner && name) {
+        fetchRepositoryData(owner, name);
     } else {
-        alert('Please enter both repository owner and name.');
+        alert('Please enter the repository in the format "owner/repo".');
     }
 });
 
 function fetchRepositoryData(owner, name) {
-    // Placeholder for GitHub API call
-    console.log(`Fetching data for ${owner}/${name}`);
-    // TODO: Implement GitHub API call
-    // TODO: Process and display the fetched data
+    const url = `https://api.github.com/repos/${owner}/${name}/contents/`;
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            displayRepositoryData(data);
+        })
+        .catch(error => {
+            console.error('Fetching error:', error);
+        });
 }
 
 // TODO: Additional functions for data processing and display
