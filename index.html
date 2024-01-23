@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal GPT Data Interface</title>
-    <link rel="stylesheet" href="src/front-end/styles.css">
+    <link rel="stylesheet" href="src/front-end/repository-style.css">
 </head>
 <body>
     <div class="container">
@@ -16,12 +16,36 @@
             <button id="fetchRepo">Fetch Repository</button>
         </section>        
         <section class="dashboard">
-            <h2>Folder Structure</h2>
-            <div id="folderStructure"></div>
-            <h2>Code Content</h2>
-            <div id="codeContent" class="code-content"></div>
+            <div class="folder-structure-section">
+                <h2>Folder Structure</h2>
+                <div class="folder-structure">
+                    <!-- Breadcrumb for current directory -->
+                    <div class="breadcrumb">Current Directory: /root</div>
+                    
+                    <!-- Folder structure content -->
+                    <div class="content">
+                        <!-- Folders and files will be dynamically populated here -->
+                    </div>
+                </div>
+                <div id="folderStructure" class="folder-structure"></div>
+            </div>            
+            <div class="summary-section">
+                <header>
+                    <h2>Summary</h2>
+                    <button id="submit-review">Submit for Review</button>
+                </header>
+                <textarea id="summary-content"></textarea>
+            </div>
+            <div class="code-content-section">
+                <h2>Code Content</h2>
+                <div id="codeContentHeader">
+                    <span id="fileInfo"></span>
+                    <button id="copyCodeBtn">Copy Code</button>
+                </div>
+                <div id="codeContent" class="code-content"></div>
+            </div>
         </section>
     </div>
-    <script src="src/front-end/script.js"></script>
+    <script src="src/front-end/repository-handler.js"></script>
 </body>
 </html>

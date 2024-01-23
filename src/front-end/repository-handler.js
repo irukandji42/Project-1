@@ -23,7 +23,7 @@ function fetchRepositoryData(owner, name, path = '') {
             if (Array.isArray(data)) {
                 displayFolderStructure(data, owner, name, path);
             } else {
-                displayFileContent(data);  // Make sure this is correctly fetching file content
+                displayFileContent(data, path);  // Pass path here
             }
         })
         .catch(error => {
@@ -35,42 +35,66 @@ function displayFolderStructure(data, owner, name, path = '') {
     const folderStructure = document.getElementById('folderStructure');
     folderStructure.innerHTML = '';
 
-    // Add 'Go Back' option if not in root
+    // Add 'Go Back' option if not in the root directory
     if (path) {
         const goBack = document.createElement('div');
         goBack.textContent = 'Go Back';
-        goBack.style.cursor = 'pointer';
-        goBack.style.color = 'blue';
-        const parentPath = path.split('/').slice(0, -1).join('/');
-        goBack.onclick = () => fetchRepositoryData(owner, name, parentPath);
+        goBack.className = 'go-back';
+        goBack.onclick = () => fetchRepositoryData(owner, name, path.split('/').slice(0, -1).join('/'));
         folderStructure.appendChild(goBack);
     }
 
+    // Display the files and directories
     data.forEach(item => {
         const elem = document.createElement('div');
         elem.textContent = item.name;
-        elem.style.cursor = 'pointer';
+        elem.className = item.type; // 'file' or 'folder'
         elem.onclick = () => {
             const newPath = path ? `${path}/${item.name}` : item.name;
-            fetchRepositoryData(owner, name, newPath);
+            if (item.type === 'dir') {
+                fetchRepositoryData(owner, name, newPath); // Fetch directory content
+            } else {
+                fetchRepositoryData(owner, name, item.path); // Fetch file content
+            }
         };
         folderStructure.appendChild(elem);
     });
 }
 
-function displayFileContent(data) {
+function displayFileContent(data, path) {
     const codeContent = document.getElementById('codeContent');
-    codeContent.innerHTML = '';  // Clear existing content
+    const fileInfo = document.getElementById('fileInfo');
+    codeContent.innerHTML = '';
 
-    const fileName = data.name.toLowerCase();
+    // Set file info
+    const fileName = path.split('/').pop();
+    fileInfo.textContent = `File: ${fileName}`;
 
-    if (fileName.endsWith('.db')) {
+    if (fileName.toLowerCase().endsWith('.db')) {
         codeContent.innerHTML = `<pre style="color: red;">[Database file (.db) content not displayed]</pre>`;
     } else {
         let formattedContent = decodeBase64(data.content);
         formattedContent = formattedContent.replace(/</g, "&lt;").replace(/>/g, "&gt;");
         codeContent.innerHTML = `<pre>${formattedContent}</pre>`;
     }
+}
+
+document.getElementById('copyCodeBtn').addEventListener('click', function() {
+    const codeContent = document.getElementById('codeContent').textContent;
+    navigator.clipboard.writeText(codeContent).then(() => {
+        alert('Code copied to clipboard!');
+    });
+});
+
+document.getElementById('submitSummary').addEventListener('click', function() {
+    const codeContent = document.getElementById('codeContent').textContent;
+    getOpenAISummary(codeContent); // Function to send content to OpenAI and display the summary
+});
+
+function getOpenAISummary(codeContent) {
+    // API request setup
+    // Use OpenAI API to analyze the code and get a summary
+    // Display the summary in 'summaryBox'
 }
 
 function decodeBase64(encodedStr) {
