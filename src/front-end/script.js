@@ -1,14 +1,3 @@
-document.getElementById('fetchRepo').addEventListener('click', function() {
-    const repoInput = document.getElementById('repoInput').value.trim();
-    const [owner, name] = repoInput.split('/');
-
-    if (owner && name) {
-        fetchRepositoryData(owner, name);
-    } else {
-        alert('Please enter the repository in the format "owner/repo".');
-    }
-});
-
 function fetchRepositoryData(owner, name, path = '') {
     const url = `https://api.github.com/repos/${owner}/${name}/contents/${path}`;
 
@@ -23,7 +12,7 @@ function fetchRepositoryData(owner, name, path = '') {
             if (Array.isArray(data)) {
                 displayFolderStructure(data, owner, name, path);
             } else {
-                displayFileContent(data, path);  // Pass path here
+                displayFileContent(data, path);
             }
         })
         .catch(error => {
@@ -79,24 +68,6 @@ function displayFileContent(data, path) {
     }
 }
 
-document.getElementById('copyCodeBtn').addEventListener('click', function() {
-    const codeContent = document.getElementById('codeContent').textContent;
-    navigator.clipboard.writeText(codeContent).then(() => {
-        alert('Code copied to clipboard!');
-    });
-});
-
-document.getElementById('submitSummary').addEventListener('click', function() {
-    const codeContent = document.getElementById('codeContent').textContent;
-    getOpenAISummary(codeContent); // Function to send content to OpenAI and display the summary
-});
-
-function getOpenAISummary(codeContent) {
-    // API request setup
-    // Use OpenAI API to analyze the code and get a summary
-    // Display the summary in 'summaryBox'
-}
-
 function decodeBase64(encodedStr) {
     try {
         return atob(encodedStr);
@@ -105,3 +76,43 @@ function decodeBase64(encodedStr) {
         return '';
     }
 }
+
+function showSummary() {
+    const summarySection = document.getElementById('summarySection');
+    if (summarySection) {
+        summarySection.style.display = 'block'; // Ensure it's visible
+    }
+}
+
+function hideSummary() {
+    const summarySection = document.getElementById('summarySection');
+    if (summarySection) {
+        summarySection.style.display = 'none'; // Hide it
+    }
+}
+
+document.getElementById('submit-review').addEventListener('click', function() {
+    const summarySection = document.getElementById('summarySection');
+    if (summarySection) {
+        summarySection.textContent = 'Placeholder Text';
+        showSummary(); // Make sure to show the summary section
+    }
+});
+
+document.getElementById('copyCodeBtn').addEventListener('click', function() {
+    const codeContent = document.getElementById('codeContent').textContent;
+    navigator.clipboard.writeText(codeContent).then(() => {
+        alert('Code copied to clipboard!');
+    });
+});
+
+document.getElementById('fetchRepo').addEventListener('click', function() {
+    const repoInput = document.getElementById('repoInput').value.trim();
+    const [owner, name] = repoInput.split('/');
+
+    if (owner && name) {
+        fetchRepositoryData(owner, name);
+    } else {
+        alert('Please enter the repository in the format "owner/repo".');
+    }
+});

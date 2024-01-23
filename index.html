@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal GPT Data Interface</title>
-    <link rel="stylesheet" href="src/front-end/repository-style.css">
+    <link rel="stylesheet" href="src/front-end/style.css">
 </head>
 <body>
     <div class="container">
@@ -14,38 +14,29 @@
         <section class="repo-query">
             <input type="text" id="repoInput" placeholder="Enter 'owner/repo'">
             <button id="fetchRepo">Fetch Repository</button>
+            <button id="resetPage">Reset</button>
         </section>        
         <section class="dashboard">
             <div class="folder-structure-section">
                 <h2>Folder Structure</h2>
-                <div class="folder-structure">
-                    <!-- Breadcrumb for current directory -->
-                    <div class="breadcrumb">Current Directory: /root</div>
-                    
-                    <!-- Folder structure content -->
-                    <div class="content">
-                        <!-- Folders and files will be dynamically populated here -->
-                    </div>
-                </div>
                 <div id="folderStructure" class="folder-structure"></div>
             </div>            
-            <div class="summary-section">
-                <header>
-                    <h2>Summary</h2>
-                    <button id="submit-review">Submit for Review</button>
-                </header>
-                <textarea id="summary-content"></textarea>
+            <div class="summary-section" id="summarySection" style="display: none;">
+                <h2>Summary</h2>
+                <div id="summaryContent" class="text-box"></div>
             </div>
             <div class="code-content-section">
                 <h2>Code Content</h2>
                 <div id="codeContentHeader">
                     <span id="fileInfo"></span>
                     <button id="copyCodeBtn">Copy Code</button>
+                    <button id="submit-review">Submit for Review</button>
+                    <button id="clearCode">Clear</button>
                 </div>
                 <div id="codeContent" class="code-content"></div>
             </div>
         </section>
     </div>
-    <script src="src/front-end/repository-handler.js"></script>
+    <script src="src/front-end/script.js"></script>
 </body>
 </html>

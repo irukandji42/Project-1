@@ -6,22 +6,8 @@ body {
     padding: 20px;
 }
 
-.container {
-    max-width: 800px;
-    margin: auto;
-    background-color: #1e1e1e;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
 header {
     text-align: center;
-    margin-bottom: 20px;
-}
-
-.repo-query {
-    display: flex;
-    justify-content: center;
     margin-bottom: 20px;
 }
 
@@ -49,10 +35,12 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* Breadcrumb */
-.breadcrumb {
-    font-size: 16px;
-    margin-bottom: 10px;
+.container {
+    max-width: 800px;
+    margin: auto;
+    background-color: #1e1e1e;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .content-header {
@@ -65,6 +53,7 @@ button:hover {
     border-top-right-radius: 4px;
     border-bottom: 1px solid #444;
 }
+
 .dashboard {
     margin-top: 20px;
 }
@@ -75,44 +64,24 @@ button:hover {
 }
 
 .file {
-    color: #d1d1d1; /* Style for files */
-    /* Additional file-specific styles */
+    color: #d1d1d1;
 }
 
 .folder {
-    color: #e5e5e5; /* Style for folders */
-    font-weight: bold;
-    /* Additional folder-specific styles */
+    color: #e5e5e5; 
+    font-weight: bold;    
 }
 
 .go-back {
-    color: #a1c9f1; /* Style for the 'Go Back' link */
+    color: #a1c9f1;
     cursor: pointer;
-    margin-bottom: 10px;
-    /* Additional 'Go Back' link styles */
+    margin-bottom: 10px;    
 }
 
-.summary-box {
-    background-color: #2d2d2d;
-    border: 1px solid #444;
-    border-radius: 4px;
-    padding: 10px;
-    margin-top: 20px;
-    color: #ffffff;
-}
-
-/* Summary Section Styles */
-.summary-section {
-    background-color: #1a1a1a;
-    color: #f1f1f1;
-}
-
-.summary-section header {
+.repo-query {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #333;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 .text-box {
@@ -126,20 +95,7 @@ button:hover {
     max-height: 300px; /* Adjust as needed */
 }
 
-/* Folder Structure Styles */
-.folder-structure .content:hover {
-    cursor: pointer;
-}
-
-.folder-structure .folder {
-    text-transform: uppercase;
-}
-
-.folder-structure .file {
-    padding-left: 20px;
-}
-
-#folderStructure, #codeContent {
+#folderStructure, #codeContent, #summarySection {
     padding: 10px;
     background-color: #2d2d2d;
     border: 1px solid #444;
@@ -161,36 +117,6 @@ button:hover {
     border-bottom: 1px solid #444;
 }
 
-#submitSummary {
-    background-color: #007bff;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    float: right; /* Position the button to the right */
-    margin: 10px 0;
-}
-
-#submitSummary {
-    background-color: #007bff;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#submitSummary:hover {
-    background-color: #0056b3;
-}
-
-#submitSummary:hover {
-    background-color: #0056b3;
-}
-
 #summary-content {
     width: 100%;
     height: 150px; /* Fixed height */
@@ -210,21 +136,6 @@ button:hover {
     cursor: pointer;
 }
 
-/* Scrollbar styles (for WebKit browsers) */
-#summary-content::-webkit-scrollbar {
-    width: 10px;
-}
-
-#summary-content::-webkit-scrollbar-thumb {
-    background: #888;
-}
-
-#summary-content::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
 #fileInfo {
     color: #cccccc;
 }
-
-/* Add more dark theme styles as needed */
