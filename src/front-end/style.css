@@ -37,7 +37,8 @@ button {
     border-radius: 4px;
     cursor: pointer;
     transition: filter 0.2s ease;
-    margin-right: 10px; /* Adjust as needed */
+    margin-right: 10px; 
+    min-width: 100px; /* Set a minimum width to prevent resizing */
 }
 
 button:last-child {
@@ -104,7 +105,17 @@ button:last-child {
     max-height: 300px; /* Adjust as needed */
 }
 
-#folderStructure, #codeContent, #summarySection {
+.summary-section h2 {
+    color: #cccccc; /* Adjust color if needed */
+    margin-bottom: 10px; /* Ensure space below the header */
+}
+
+.summary-section {
+    display: block; /* Change if needed */
+    /* Add any additional styling here */
+}
+
+#folderStructure, #codeContent {
     padding: 10px;
     background-color: #2d2d2d;
     border: 1px solid #444;
@@ -166,6 +177,3 @@ button:last-child {
     background-color: var(--copy-code-color);
 }
 
-button:hover {
-    filter: brightness(60%); /* Decrease brightness on hover */
-}

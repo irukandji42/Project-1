@@ -84,26 +84,21 @@ function showSummary() {
     }
 }
 
-function hideSummary() {
+function hideSummaryIfNeeded() {
     const summarySection = document.getElementById('summarySection');
-    if (summarySection) {
-        summarySection.style.display = 'none'; // Hide it
+    const summaryContent = document.getElementById('summaryContent');
+
+    if (summaryContent.textContent.trim() === '') {
+        summarySection.style.display = 'none';
     }
 }
-
+ 
 document.getElementById('submit-review').addEventListener('click', function() {
-    const summarySection = document.getElementById('summarySection');
-    if (summarySection) {
-        summarySection.textContent = 'Placeholder Text';
+    const summaryContent = document.getElementById('summaryContent');
+    if (summaryContent) {
+        summaryContent.textContent = 'Placeholder Text'; // This will only change the text content of the summary content div
         showSummary(); // Make sure to show the summary section
     }
-});
-
-document.getElementById('copyCodeBtn').addEventListener('click', function() {
-    const codeContent = document.getElementById('codeContent').textContent;
-    navigator.clipboard.writeText(codeContent).then(() => {
-        alert('Code copied to clipboard!');
-    });
 });
 
 document.getElementById('fetchRepo').addEventListener('click', function() {
@@ -115,4 +110,43 @@ document.getElementById('fetchRepo').addEventListener('click', function() {
     } else {
         alert('Please enter the repository in the format "owner/repo".');
     }
+});
+
+document.getElementById('clearCode').addEventListener('click', function() {
+    // Clear the Code Content section
+    const codeContent = document.getElementById('codeContent');
+    codeContent.innerHTML = '';
+
+    // Clear the fileInfo field
+    const fileInfo = document.getElementById('fileInfo');
+    fileInfo.textContent = '';
+
+    // Clear the Summary section and hide it if empty
+    const summaryContent = document.getElementById('summaryContent');
+    summaryContent.innerHTML = '';
+
+    hideSummaryIfNeeded();
+});
+
+document.getElementById('resetPage').addEventListener('click', function() {
+    // Reset the repository input field
+    const repoInput = document.getElementById('repoInput');
+    repoInput.value = '';
+
+    // Clear the folder structure display
+    const folderStructure = document.getElementById('folderStructure');
+    folderStructure.innerHTML = '';
+
+    // Clear the file content viewer
+    const codeContent = document.getElementById('codeContent');
+    codeContent.innerHTML = '';
+
+    // Clear the fileInfo field
+    const fileInfo = document.getElementById('fileInfo');
+    fileInfo.textContent = '';
+
+    // Clear and hide the Summary section
+    const summaryContent = document.getElementById('summaryContent');
+    summaryContent.innerHTML = '';
+    hideSummaryIfNeeded();
 });
