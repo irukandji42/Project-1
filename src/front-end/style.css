@@ -82,12 +82,6 @@ button:last-child {
     font-weight: bold;    
 }
 
-.go-back {
-    color: #a1c9f1;
-    cursor: pointer;
-    margin-bottom: 10px;    
-}
-
 .repo-query {
     display: flex;
     justify-content: center;
@@ -176,4 +170,29 @@ button:last-child {
 #copyCodeBtn {
     background-color: var(--copy-code-color);
 }
+
+.breadcrumbs {
+    height: 40px; /* Fixed height */
+    overflow-x: auto; /* Horizontal scrolling for overflow */
+    overflow-y: hidden; /* Hide vertical overflow */
+    white-space: nowrap; /* Keep breadcrumbs in a single line */
+    padding: 5px 10px;
+    background-color: #333;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    color: #fff;
+    display: flex;
+    align-items: center; /* Vertically center content */
+}
+
+.breadcrumb {
+    cursor: pointer;
+    color: #4f81bd;
+    margin-right: 5px;
+}
+
+.breadcrumb:hover {
+    text-decoration: underline;
+}
+
 

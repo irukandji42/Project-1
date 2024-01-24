@@ -24,14 +24,9 @@ function displayFolderStructure(data, owner, name, path = '') {
     const folderStructure = document.getElementById('folderStructure');
     folderStructure.innerHTML = '';
 
-    // Add 'Go Back' option if not in the root directory
-    if (path) {
-        const goBack = document.createElement('div');
-        goBack.textContent = 'Go Back';
-        goBack.className = 'go-back';
-        goBack.onclick = () => fetchRepositoryData(owner, name, path.split('/').slice(0, -1).join('/'));
-        folderStructure.appendChild(goBack);
-    }
+    // Generate breadcrumbs
+    const breadcrumbs = generateBreadcrumbs(owner, name, path);
+    folderStructure.appendChild(breadcrumbs);
 
     // Display the files and directories
     data.forEach(item => {
@@ -48,6 +43,51 @@ function displayFolderStructure(data, owner, name, path = '') {
         };
         folderStructure.appendChild(elem);
     });
+}
+
+function generateBreadcrumbs(owner, name, path) {
+    const breadcrumbContainer = document.createElement('div');
+    breadcrumbContainer.className = 'breadcrumbs';
+
+    // Function to handle breadcrumb click
+    const onBreadcrumbClick = (targetPath) => () => fetchRepositoryData(owner, name, targetPath);
+
+    // Add the Root breadcrumb
+    breadcrumbContainer.appendChild(createBreadcrumb('Root', '', onBreadcrumbClick('')));
+    // Add a separator after Root
+    breadcrumbContainer.appendChild(document.createTextNode(' / '));
+
+    if (path) {
+        // Split the path and filter out empty parts
+        const pathParts = path.split('/').filter(Boolean);
+        let cumulativePath = '';
+
+        pathParts.forEach((part, index) => {
+            // Add separator before all items except the first
+            if (index > 0) {
+                breadcrumbContainer.appendChild(document.createTextNode(' / '));
+            }
+
+            cumulativePath += `${index > 0 ? '/' : ''}${part}`;
+            breadcrumbContainer.appendChild(createBreadcrumb(part, cumulativePath, onBreadcrumbClick(cumulativePath)));
+        });
+    }
+
+    return breadcrumbContainer;
+}
+
+
+function createBreadcrumb(text, path, onClick) {
+    const crumb = document.createElement('span');
+    crumb.className = 'breadcrumb';
+    crumb.textContent = text;
+    if (onClick) {
+        crumb.onclick = onClick;
+        crumb.style.cursor = 'pointer';
+    } else {
+        crumb.style.textDecoration = 'none'; // or any other style for the current directory
+    }
+    return crumb;
 }
 
 function displayFileContent(data, path) {
