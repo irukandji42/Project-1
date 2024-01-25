@@ -28,21 +28,63 @@ function displayFolderStructure(data, owner, name, path = '') {
     const breadcrumbs = generateBreadcrumbs(owner, name, path);
     folderStructure.appendChild(breadcrumbs);
 
-    // Display the files and directories
+    const folders = [];
+    const files = [];
+
+    // Separate items into folders and files
     data.forEach(item => {
-        const elem = document.createElement('div');
-        elem.textContent = item.name;
-        elem.className = item.type; // 'file' or 'folder'
-        elem.onclick = () => {
-            const newPath = path ? `${path}/${item.name}` : item.name;
-            if (item.type === 'dir') {
-                fetchRepositoryData(owner, name, newPath); // Fetch directory content
-            } else {
-                fetchRepositoryData(owner, name, item.path); // Fetch file content
-            }
-        };
+        if (item.type === 'dir') {
+            folders.push(item);
+        } else {
+            files.push(item);
+        }
+    });
+
+    // Render folders
+    folders.forEach(folder => {
+        const elem = createFolderOrFileElement(folder, path, owner, name);
         folderStructure.appendChild(elem);
     });
+
+    // Render files with indentation
+    files.forEach(file => {
+        const elem = createFolderOrFileElement(file, path, owner, name);
+        elem.style.paddingLeft = '20px'; // Add indentation for files
+        folderStructure.appendChild(elem);
+    });
+}
+
+function createFolderOrFileElement(item, path, owner, name) {
+    const elem = document.createElement('div');
+    elem.textContent = item.name;
+    elem.className = item.type; // 'file' or 'folder'
+    elem.onclick = () => {
+        const newPath = path ? `${path}/${item.name}` : item.name;
+        if (item.type === 'dir') {
+            fetchRepositoryData(owner, name, newPath); // Fetch directory content
+        } else {
+            fetchRepositoryData(owner, name, item.path); // Fetch file content
+        }
+    };
+    return elem;
+}
+
+function displayFileContent(data, path) {
+    const codeContent = document.getElementById('codeContent');
+    const fileInfo = document.getElementById('fileInfo');
+    codeContent.innerHTML = '';
+
+    // Set file info
+    const fileName = path.split('/').pop();
+    fileInfo.textContent = `File: ${fileName}`;
+
+    if (fileName.toLowerCase().endsWith('.db')) {
+        codeContent.innerHTML = `<pre style="color: red;">[Database file (.db) content not displayed]</pre>`;
+    } else {
+        let formattedContent = decodeBase64(data.content);
+        formattedContent = formattedContent.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        codeContent.innerHTML = `<pre>${formattedContent}</pre>`;
+    }
 }
 
 function generateBreadcrumbs(owner, name, path) {
@@ -92,24 +134,6 @@ function createSeparator() {
     separator.className = 'breadcrumb-separator';
     separator.textContent = '\\';
     return separator;
-}
-
-function displayFileContent(data, path) {
-    const codeContent = document.getElementById('codeContent');
-    const fileInfo = document.getElementById('fileInfo');
-    codeContent.innerHTML = '';
-
-    // Set file info
-    const fileName = path.split('/').pop();
-    fileInfo.textContent = `File: ${fileName}`;
-
-    if (fileName.toLowerCase().endsWith('.db')) {
-        codeContent.innerHTML = `<pre style="color: red;">[Database file (.db) content not displayed]</pre>`;
-    } else {
-        let formattedContent = decodeBase64(data.content);
-        formattedContent = formattedContent.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        codeContent.innerHTML = `<pre>${formattedContent}</pre>`;
-    }
 }
 
 function decodeBase64(encodedStr) {

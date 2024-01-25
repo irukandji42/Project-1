@@ -172,7 +172,6 @@ button:last-child {
 }
 
 .breadcrumbs {
-    height: 40px; /* Fixed height */
     overflow-x: auto; /* Horizontal scrolling for overflow */
     overflow-y: hidden; /* Hide vertical overflow */
     white-space: nowrap; /* Keep breadcrumbs in a single line */
