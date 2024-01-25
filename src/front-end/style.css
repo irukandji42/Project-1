@@ -94,6 +94,7 @@ button:last-child {
     border-radius: 4px;
     padding: 10px;
     margin-top: 10px;
+    margin-bottom: 20px;
     color: #ffffff;
     overflow-y: auto; /* Enable vertical scrolling */
     max-height: 300px; /* Adjust as needed */

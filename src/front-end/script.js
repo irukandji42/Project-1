@@ -1,3 +1,5 @@
+let lastSubmittedContent = '';
+
 function fetchRepositoryData(owner, name, path = '') {
     const url = `https://api.github.com/repos/${owner}/${name}/contents/${path}`;
 
@@ -171,7 +173,18 @@ function copyToClipboard(text) {
 }
  
 document.getElementById('submit-review').addEventListener('click', function() {
+    const codeContent = document.getElementById('codeContent').textContent;
     const summaryContent = document.getElementById('summaryContent');
+
+    // Check if code content is empty or the same as the last submitted content
+    if (!codeContent.trim() || codeContent === lastSubmittedContent) {
+        console.log('No new content to submit for review.');
+        return; // Exit the function early
+    }
+
+    // Update last submitted content
+    lastSubmittedContent = codeContent;
+
     if (summaryContent) {
         summaryContent.textContent = 'Placeholder Text'; // This will only change the text content of the summary content div
         showSummary(); // Make sure to show the summary section
@@ -203,7 +216,11 @@ document.getElementById('clearCode').addEventListener('click', function() {
     summaryContent.innerHTML = '';
 
     hideSummaryIfNeeded();
+
+    // Reset the lastSubmittedContent to allow resubmitting the same content
+    lastSubmittedContent = '';
 });
+
 
 document.getElementById('resetPage').addEventListener('click', function() {
     // Reset the repository input field
