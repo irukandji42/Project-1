@@ -187,12 +187,16 @@ button:last-child {
 
 .breadcrumb {
     cursor: pointer;
-    color: #4f81bd;
-    margin-right: 5px;
+    color: #4f81bd;    
 }
 
 .breadcrumb:hover {
     text-decoration: underline;
+}
+
+.breadcrumb-separator {
+    color: white;
+    margin: 0 5px; /* Adjust spacing if needed */
 }
 
 

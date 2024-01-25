@@ -52,10 +52,9 @@ function generateBreadcrumbs(owner, name, path) {
     // Function to handle breadcrumb click
     const onBreadcrumbClick = (targetPath) => () => fetchRepositoryData(owner, name, targetPath);
 
-    // Add the Root breadcrumb
+    // Add the Root/ breadcrumb
     breadcrumbContainer.appendChild(createBreadcrumb('Root', '', onBreadcrumbClick('')));
-    // Add a separator after Root
-    breadcrumbContainer.appendChild(document.createTextNode(' / '));
+    breadcrumbContainer.appendChild(createSeparator());
 
     if (path) {
         // Split the path and filter out empty parts
@@ -63,9 +62,8 @@ function generateBreadcrumbs(owner, name, path) {
         let cumulativePath = '';
 
         pathParts.forEach((part, index) => {
-            // Add separator before all items except the first
             if (index > 0) {
-                breadcrumbContainer.appendChild(document.createTextNode(' / '));
+                breadcrumbContainer.appendChild(createSeparator());
             }
 
             cumulativePath += `${index > 0 ? '/' : ''}${part}`;
@@ -75,7 +73,6 @@ function generateBreadcrumbs(owner, name, path) {
 
     return breadcrumbContainer;
 }
-
 
 function createBreadcrumb(text, path, onClick) {
     const crumb = document.createElement('span');
@@ -88,6 +85,13 @@ function createBreadcrumb(text, path, onClick) {
         crumb.style.textDecoration = 'none'; // or any other style for the current directory
     }
     return crumb;
+}
+
+function createSeparator() {
+    const separator = document.createElement('span');
+    separator.className = 'breadcrumb-separator';
+    separator.textContent = '\\';
+    return separator;
 }
 
 function displayFileContent(data, path) {
