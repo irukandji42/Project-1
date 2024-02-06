@@ -73,10 +73,8 @@ function createFolderOrFileElement(item, path, owner, name) {
 
 function displayFileContent(data, path) {
     const codeContent = document.getElementById('codeContent');
-    const fileInfo = document.getElementById('fileInfo');
-    codeContent.innerHTML = '';
+    codeContent.innerHTML = ''; // Reset code content
 
-    // Set file info
     const fileName = path.split('/').pop();
     fileInfo.textContent = `File: ${fileName}`;
 
@@ -85,7 +83,14 @@ function displayFileContent(data, path) {
     } else {
         let formattedContent = decodeBase64(data.content);
         formattedContent = formattedContent.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        codeContent.innerHTML = `<pre>${formattedContent}</pre>`;
+
+        // Split content into lines for numbering
+        const lines = formattedContent.split('\n');
+        lines.forEach((line, index) => {
+            const lineContainer = document.createElement('div');
+            lineContainer.innerHTML = `<span class="line-number">${index + 1}</span> ${line}`;
+            codeContent.appendChild(lineContainer);
+        });
     }
 }
 
@@ -246,8 +251,23 @@ document.getElementById('resetPage').addEventListener('click', function() {
 });
 
 document.getElementById('copyCodeBtn').addEventListener('click', function() {
-    const codeContent = document.getElementById('codeContent');
-    if (codeContent.innerText) {
-        copyToClipboard(codeContent.innerText);
-    }
+    const codeLines = document.querySelectorAll('#codeContent > div'); // Assuming each line of code is wrapped in a div
+    let codeToCopy = '';
+    codeLines.forEach(line => {
+        // Assuming the actual code (excluding line number) is wrapped in a separate span or similar container
+        const codeSpan = line.querySelector('span:not(.line-number)');
+        if (codeSpan) {
+            codeToCopy += codeSpan.textContent + '\n'; // Aggregate the code, excluding line numbers
+        } else {
+            // Fallback in case there's no span around the code content
+            codeToCopy += line.textContent.substring(line.querySelector('.line-number').textContent.length).trim() + '\n';
+        }
+    });
+
+    // Copy the aggregated code to clipboard
+    navigator.clipboard.writeText(codeToCopy).then(() => {
+        console.log('Code copied to clipboard!');
+    }).catch(err => {
+        console.error('Failed to copy code:', err);
+    });
 });

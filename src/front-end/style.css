@@ -199,4 +199,24 @@ button:last-child {
     margin: 0 5px; /* Adjust spacing if needed */
 }
 
+#codeContentContainer {
+    display: flex;
+}
+
+.line-number {
+    color: #888; /* Color for line numbers */
+    user-select: none; /* Prevent line numbers from being selectable if desired */
+    margin-right: 8px; /* Space between line numbers and code */
+    display: inline-block; /* Keep line number and code on the same line */
+    width: 40px; /* Ensure consistent width for line numbers */
+    text-align: right; /* Right-align line numbers */
+}
+
+.code-content {
+    white-space: pre; /* Preserves whitespace and formatting */
+    overflow-x: auto; /* Enables horizontal scrolling */
+    font-family: monospace; /* Ensures consistent spacing */
+}
+
+
 
