@@ -6,6 +6,8 @@ function fetchRepositoryData(owner, name, path = '') {
     fetch(url)
         .then(response => {
             if (!response.ok) {
+                // If response is not ok, assume the repo might not exist or there's a typo
+                showToast(`Repository not found or there was a typo. Please try again. Status: ${response.status}`);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
@@ -19,8 +21,11 @@ function fetchRepositoryData(owner, name, path = '') {
         })
         .catch(error => {
             console.error('Fetching error:', error);
+            // Optionally, display a more generic error message in the toast for any type of fetch error
+            // showToast('An error occurred while fetching repository data. Please try again.');
         });
 }
+
 
 function displayFolderStructure(data, owner, name, path = '') {
     const folderStructure = document.getElementById('folderStructure');
@@ -199,11 +204,22 @@ document.getElementById('submit-review').addEventListener('click', function() {
 document.getElementById('fetchRepo').addEventListener('click', function() {
     const repoInput = document.getElementById('repoInput').value.trim();
     const [owner, name] = repoInput.split('/');
+    const button = this; // Reference to the button
+    const cooldownPeriod = 3000; // Cooldown period in milliseconds (e.g., 3 seconds)
+
+    // Disable the button to prevent repeated clicks
+    button.disabled = true;
+    setTimeout(() => {
+        button.disabled = false; // Re-enable the button after the cooldown period
+    }, cooldownPeriod);
 
     if (owner && name) {
         fetchRepositoryData(owner, name);
     } else {
+        // If input validation fails, show an error (consider replacing alert with showToast if available)
         alert('Please enter the repository in the format "owner/repo".');
+        // Optionally, immediately re-enable the button if the input is invalid, since no fetch operation will occur
+        button.disabled = false; // Comment this line if you want to keep the button disabled during cooldown even for invalid input
     }
 });
 
@@ -270,3 +286,20 @@ document.getElementById('copyCodeBtn').addEventListener('click', function() {
         console.error('Failed to copy code:', err);
     });
 });
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10); // Slight delay to ensure the class change triggers the animation
+
+    // Wait for the fade-in to finish, then start fade-out after a delay
+    setTimeout(() => {
+        toast.classList.remove('show'); // Begin fade-out
+        // Listen for the end of the fade-out transition
+        toast.addEventListener('transitionend', function() {
+            document.body.removeChild(toast); // Remove the toast once fade-out completes
+        }, { once: true }); // Ensure the listener is removed after it fires
+    }, 3000 + 500); // Show duration + fade-in duration to ensure full visibility before fade-out
+}

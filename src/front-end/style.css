@@ -217,3 +217,48 @@ button:last-child {
     overflow-x: auto; /* Enables horizontal scrolling */
     font-family: monospace; /* Ensures consistent spacing */
 }
+
+.toast {
+    visibility: hidden; /* Initially hidden */
+    opacity: 0;
+    min-width: 250px;
+    margin-left: -125px; /* To center the element */
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    bottom: 30px; /* Positioned at the bottom */
+    font-size: 17px;
+    transition: opacity 0.5s linear; /* Transition for opacity changes */
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s linear; /* Apply the same duration for fade-in */
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
