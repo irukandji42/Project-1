@@ -226,7 +226,6 @@ document.getElementById('clearCode').addEventListener('click', function() {
     lastSubmittedContent = '';
 });
 
-
 document.getElementById('resetPage').addEventListener('click', function() {
     // Reset the repository input field
     const repoInput = document.getElementById('repoInput');
