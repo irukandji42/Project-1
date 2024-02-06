@@ -1,4 +1,35 @@
+// === Initialization ===
 let lastSubmittedContent = '';
+
+// === Utility Functions ===
+
+function decodeBase64(encodedStr) {
+    try {
+        return atob(encodedStr);
+    } catch (error) {
+        console.error('Error decoding Base64 string:', error);
+        return '';
+    }
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10); // Slight delay to ensure the class change triggers the animation
+
+    // Wait for the fade-in to finish, then start fade-out after a delay
+    setTimeout(() => {
+        toast.classList.remove('show'); // Begin fade-out
+        // Listen for the end of the fade-out transition
+        toast.addEventListener('transitionend', function() {
+            document.body.removeChild(toast); // Remove the toast once fade-out completes
+        }, { once: true }); // Ensure the listener is removed after it fires
+    }, 3000 + 500); // Show duration + fade-in duration to ensure full visibility before fade-out
+}
+
+// === DOM Manipulation Functions ===
 
 function fetchRepositoryData(owner, name, path = '') {
     const url = `https://api.github.com/repos/${owner}/${name}/contents/${path}`;
@@ -60,21 +91,6 @@ function displayFolderStructure(data, owner, name, path = '') {
     });
 }
 
-function createFolderOrFileElement(item, path, owner, name) {
-    const elem = document.createElement('div');
-    elem.textContent = item.name;
-    elem.className = item.type; // 'file' or 'folder'
-    elem.onclick = () => {
-        const newPath = path ? `${path}/${item.name}` : item.name;
-        if (item.type === 'dir') {
-            fetchRepositoryData(owner, name, newPath); // Fetch directory content
-        } else {
-            fetchRepositoryData(owner, name, item.path); // Fetch file content
-        }
-    };
-    return elem;
-}
-
 function displayFileContent(data, path) {
     const codeContent = document.getElementById('codeContent');
     codeContent.innerHTML = ''; // Reset code content
@@ -96,6 +112,21 @@ function displayFileContent(data, path) {
             codeContent.appendChild(lineContainer);
         });
     }
+}
+
+function createFolderOrFileElement(item, path, owner, name) {
+    const elem = document.createElement('div');
+    elem.textContent = item.name;
+    elem.className = item.type; // 'file' or 'folder'
+    elem.onclick = () => {
+        const newPath = path ? `${path}/${item.name}` : item.name;
+        if (item.type === 'dir') {
+            fetchRepositoryData(owner, name, newPath); // Fetch directory content
+        } else {
+            fetchRepositoryData(owner, name, item.path); // Fetch file content
+        }
+    };
+    return elem;
 }
 
 function generateBreadcrumbs(owner, name, path) {
@@ -147,15 +178,6 @@ function createSeparator() {
     return separator;
 }
 
-function decodeBase64(encodedStr) {
-    try {
-        return atob(encodedStr);
-    } catch (error) {
-        console.error('Error decoding Base64 string:', error);
-        return '';
-    }
-}
-
 function showSummary() {
     const summarySection = document.getElementById('summarySection');
     if (summarySection) {
@@ -180,25 +202,8 @@ function copyToClipboard(text) {
     document.execCommand('copy');
     document.body.removeChild(textarea);
 }
- 
-document.getElementById('submit-review').addEventListener('click', function() {
-    const codeContent = document.getElementById('codeContent').textContent;
-    const summaryContent = document.getElementById('summaryContent');
 
-    // Check if code content is empty or the same as the last submitted content
-    if (!codeContent.trim() || codeContent === lastSubmittedContent) {
-        console.log('No new content to submit for review.');
-        return; // Exit the function early
-    }
-
-    // Update last submitted content
-    lastSubmittedContent = codeContent;
-
-    if (summaryContent) {
-        summaryContent.textContent = 'Placeholder Text'; // This will only change the text content of the summary content div
-        showSummary(); // Make sure to show the summary section
-    }
-});
+// === Event Listeners ===
 
 document.getElementById('fetchRepo').addEventListener('click', function() {
     const repoInput = document.getElementById('repoInput').value.trim();
@@ -219,6 +224,25 @@ document.getElementById('fetchRepo').addEventListener('click', function() {
         alert('Please enter the repository in the format "owner/repo".');
         // Optionally, immediately re-enable the button if the input is invalid, since no fetch operation will occur
         button.disabled = false; // Comment this line if you want to keep the button disabled during cooldown even for invalid input
+    }
+});
+
+document.getElementById('submit-review').addEventListener('click', function() {
+    const codeContent = document.getElementById('codeContent').textContent;
+    const summaryContent = document.getElementById('summaryContent');
+
+    // Check if code content is empty or the same as the last submitted content
+    if (!codeContent.trim() || codeContent === lastSubmittedContent) {
+        console.log('No new content to submit for review.');
+        return; // Exit the function early
+    }
+
+    // Update last submitted content
+    lastSubmittedContent = codeContent;
+
+    if (summaryContent) {
+        summaryContent.textContent = 'Placeholder Text'; // This will only change the text content of the summary content div
+        showSummary(); // Make sure to show the summary section
     }
 });
 
@@ -286,19 +310,4 @@ document.getElementById('copyCodeBtn').addEventListener('click', function() {
     });
 });
 
-function showToast(message) {
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.classList.add('show'), 10); // Slight delay to ensure the class change triggers the animation
-
-    // Wait for the fade-in to finish, then start fade-out after a delay
-    setTimeout(() => {
-        toast.classList.remove('show'); // Begin fade-out
-        // Listen for the end of the fade-out transition
-        toast.addEventListener('transitionend', function() {
-            document.body.removeChild(toast); // Remove the toast once fade-out completes
-        }, { once: true }); // Ensure the listener is removed after it fires
-    }, 3000 + 500); // Show duration + fade-in duration to ensure full visibility before fade-out
-}
+// Optional: Consider creating a function to initialize event listeners if the setup grows more complex.

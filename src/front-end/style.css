@@ -1,3 +1,13 @@
+/* === Global Styles === */
+:root {
+    /* Define primary colors for buttons */
+    --fetch-repo-color: #28a745;
+    --reset-color: #dc3545;
+    --submit-review-color: #28a745;
+    --clear-color: #dc3545;
+    --copy-code-color: #007bff;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #121212; /* Dark background */
@@ -6,43 +16,10 @@ body {
     padding: 20px;
 }
 
+/* === Layout & Structure === */
 header {
     text-align: center;
     margin-bottom: 20px;
-}
-
-input[type="text"] {
-    width: 30%;
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #333333;
-    color: #ffffff;
-}
-
-:root {
-    /* Define primary colors for buttons */
-    --fetch-repo-color: #28a745; 
-    --reset-color: #dc3545; 
-    --submit-review-color:#28a745; 
-    --clear-color: #dc3545;
-    --copy-code-color: #007bff; 
-}
-
-button {
-    padding: 10px 20px;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: filter 0.2s ease;
-    margin-right: 10px; 
-    min-width: 100px; /* Set a minimum width to prevent resizing */
-}
-
-button:last-child {
-    margin-right: 0; /* Remove right margin for the last button */
 }
 
 .container {
@@ -68,88 +45,37 @@ button:last-child {
     margin-top: 20px;
 }
 
-.dashboard h2 {
-    margin-top: 0;
-    color: #cccccc;
-}
-
-.file {
-    color: #d1d1d1;
-}
-
-.folder {
-    color: #e5e5e5; 
-    font-weight: bold;    
-}
-
+.summary-section,
 .repo-query {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
 }
 
-.text-box {
-    background-color: #2d2d2d;
-    border: 1px solid #444;
-    border-radius: 4px;
+/* === Form Elements === */
+input[type="text"] {
+    width: 30%;
     padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    color: #ffffff;
-    overflow-y: auto; /* Enable vertical scrolling */
-    max-height: 300px; /* Adjust as needed */
-}
-
-.summary-section h2 {
-    color: #cccccc; /* Adjust color if needed */
-    margin-bottom: 10px; /* Ensure space below the header */
-}
-
-.summary-section {
-    display: block; /* Change if needed */
-    /* Add any additional styling here */
-}
-
-#folderStructure, #codeContent {
-    padding: 10px;
-    background-color: #2d2d2d;
-    border: 1px solid #444;
+    margin-right: 10px;
+    border: 1px solid #ddd;
     border-radius: 4px;
-    margin-bottom: 20px;
-    min-height: 150px; /* Adjust as needed */
-    overflow: auto; /* Adds scrollbar if content overflows */
-    color: #ffffff; /* Light text color for dark mode */
-}
-
-#codeContentHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     background-color: #333333;
-    padding: 10px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom: 1px solid #444;
+    color: #ffffff;
 }
 
-#codeContentHeader button {
-    /* Additional styling for buttons in the header */
-    margin-left: 10px; /* Space between buttons */
-}
-
-#summary-content {
-    width: 100%;
-    height: 150px; /* Fixed height */
-    overflow-y: scroll; /* Enable vertical scrolling */
+button {
+    padding: 10px 20px;
+    color: white;
     border: none;
-    background-color: #1a1a1a;
-    color: #f1f1f1;
-    padding: 10px;
-    box-sizing: border-box;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: filter 0.2s ease;
+    margin-right: 10px;
+    min-width: 100px; /* Set a minimum width to prevent resizing */
 }
 
-#fileInfo {
-    color: #cccccc;
+button:last-child {
+    margin-right: 0; /* Remove right margin for the last button */
 }
 
 #fetchRepo {
@@ -172,57 +98,45 @@ button:last-child {
     background-color: var(--copy-code-color);
 }
 
-.breadcrumbs {
-    overflow-x: auto; /* Horizontal scrolling for overflow */
-    overflow-y: hidden; /* Hide vertical overflow */
-    white-space: nowrap; /* Keep breadcrumbs in a single line */
-    padding: 5px 10px;
-    background-color: #333;
+/* === Content & Typography === */
+.dashboard h2,
+.summary-section h2 {
+    color: #cccccc;
+    margin-top: 0;
+}
+
+.file,
+.folder {
+    color: #d1d1d1;
+    font-weight: bold;
+}
+
+.text-box,
+#folderStructure,
+#codeContent {
+    background-color: #2d2d2d;
+    border: 1px solid #444;
     border-radius: 4px;
-    margin-bottom: 10px;
-    color: #fff;
-    display: flex;
-    align-items: center; /* Vertically center content */
+    padding: 10px;
+    color: #ffffff;
+    overflow: auto; /* Adds scrollbar if content overflows */
+    margin-bottom: 20px;
 }
 
-.breadcrumb {
-    cursor: pointer;
-    color: #4f81bd;    
+#summary-content {
+    width: 100%;
+    height: 150px;
+    overflow-y: scroll; /* Enable vertical scrolling */
+    background-color: #1a1a1a;
+    color: #f1f1f1;
+    padding: 10px;
 }
 
-.breadcrumb:hover {
-    text-decoration: underline;
-}
-
-.breadcrumb-separator {
-    color: white;
-    margin: 0 5px; /* Adjust spacing if needed */
-}
-
-#codeContentContainer {
-    display: flex;
-}
-
-.line-number {
-    color: #888; /* Color for line numbers */
-    user-select: none; /* Prevent line numbers from being selectable if desired */
-    margin-right: 8px; /* Space between line numbers and code */
-    display: inline-block; /* Keep line number and code on the same line */
-    width: 40px; /* Ensure consistent width for line numbers */
-    text-align: right; /* Right-align line numbers */
-}
-
-.code-content {
-    white-space: pre; /* Preserves whitespace and formatting */
-    overflow-x: auto; /* Enables horizontal scrolling */
-    font-family: monospace; /* Ensures consistent spacing */
-}
-
+/* === Interactive Components === */
 .toast {
     visibility: hidden; /* Initially hidden */
     opacity: 0;
     min-width: 250px;
-    margin-left: -125px; /* To center the element */
     background-color: #333;
     color: #fff;
     text-align: center;
@@ -232,7 +146,7 @@ button:last-child {
     z-index: 1;
     left: 50%;
     transform: translateX(-50%); /* Center horizontally */
-    bottom: 30px; /* Positioned at the bottom */
+    bottom: 30px;
     font-size: 17px;
     transition: opacity 0.5s linear; /* Transition for opacity changes */
 }
@@ -240,5 +154,51 @@ button:last-child {
 .toast.show {
     visibility: visible;
     opacity: 1;
-    transition: opacity 0.5s linear; /* Apply the same duration for fade-in */
+}
+
+.breadcrumbs,
+.breadcrumb,
+.breadcrumb:hover,
+.breadcrumb-separator {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: #333;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    overflow-x: auto; /* Horizontal scrolling for overflow */
+}
+
+.breadcrumb {
+    cursor: pointer;
+    color: #4f81bd;
+}
+
+.breadcrumb:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-separator {
+    margin: 0 5px;
+}
+
+/* === Code Content & Line Numbers === */
+#codeContentContainer {
+    display: flex;
+}
+
+.line-number {
+    user-select: none; /* Prevent line numbers from being selectable */
+    color: #888;
+    margin-right: 8px;
+    display: inline-block;
+    width: 40px;
+    text-align: right;
+}
+
+.code-content {
+    white-space: pre; /* Preserves whitespace and formatting */
+    overflow-x: auto; /* Enables horizontal scrolling */
+    font-family: monospace; /* Ensures consistent spacing */
 }
