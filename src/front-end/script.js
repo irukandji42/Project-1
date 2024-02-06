@@ -26,7 +26,6 @@ function fetchRepositoryData(owner, name, path = '') {
         });
 }
 
-
 function displayFolderStructure(data, owner, name, path = '') {
     const folderStructure = document.getElementById('folderStructure');
     folderStructure.innerHTML = '';
