@@ -96,7 +96,8 @@ function displayFileContent(data, path) {
     codeContent.innerHTML = ''; // Reset code content
 
     const fileName = path.split('/').pop();
-    fileInfo.textContent = `File: ${fileName}`;
+    const fileInfo = document.getElementById('fileInfo');
+    fileInfo.textContent = `: ${fileName}`; // Update this line to change how fileInfo is displayed
 
     if (fileName.toLowerCase().endsWith('.db')) {
         codeContent.innerHTML = `<pre style="color: red;">[Database file (.db) content not displayed]</pre>`;

@@ -72,10 +72,31 @@ button {
     transition: filter 0.2s ease;
     margin-right: 10px;
     min-width: 100px; /* Set a minimum width to prevent resizing */
+    transition: opacity 0.3s ease; /* Smooth transition for the opacity change */
 }
 
 button:last-child {
     margin-right: 0; /* Remove right margin for the last button */
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0; /* Adds some padding above and below the buttons */
+    align-items: center; /* Vertically centers the buttons within the container */
+}
+
+.button-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right:0;
+}
+
+button:hover {
+    opacity: 0.8; /* Reduces the opacity to 80% on hover */
 }
 
 #fetchRepo {
@@ -83,26 +104,34 @@ button:last-child {
 }
 
 #resetPage {
-    background-color: var(--reset-color);
+    background-color: var(--reset-color);    
 }
 
 #submit-review {
+    order: 1; /* Ensures "Submit for Review" is on the left */
     background-color: var(--submit-review-color);
 }
 
 #clearCode {
+    order: 2; /* Centers the "Clear" button */
+    margin: 0 auto; /* Centers the button in the container */
     background-color: var(--clear-color);
 }
 
 #copyCodeBtn {
+    order: 3; /* Positions "Copy Code" on the right */
     background-color: var(--copy-code-color);
 }
 
 /* === Content & Typography === */
-.dashboard h2,
-.summary-section h2 {
-    color: #cccccc;
+.folder-structure-section h2,
+.summary-section h2,
+.code-content-section h2 {
+    color: #cccccc; /* Light grey text color */
     margin-top: 0;
+    margin-bottom: 20px; /* Adds space below the header */
+    font-size: 1.5em; /* Adjust the font size as needed */
+    font-weight: normal; /* Standard weight for all headers */
 }
 
 .file,
@@ -201,4 +230,11 @@ button:last-child {
     white-space: pre; /* Preserves whitespace and formatting */
     overflow-x: auto; /* Enables horizontal scrolling */
     font-family: monospace; /* Ensures consistent spacing */
+}
+
+.code-content-section h2 span#fileInfo {
+    margin-left: 10px; /* Adds spacing between the header text and file name */
+    font-weight: normal; /* Matches the header font weight */
+    color: #a8a8a8; /* Slightly muted color for differentiation */
+    opacity: 0.8; /* Optional: slightly reduces opacity to blend with the header */
 }
